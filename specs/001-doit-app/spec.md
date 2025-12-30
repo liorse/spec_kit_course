@@ -44,19 +44,22 @@ Users can create new goals by clicking an "Add Goal" button which opens a modal 
 
 ### User Story 3 - Complete or Delete Goals (Priority: P3)
 
-Users can mark goals as complete using a checkbox, which moves them to the completed column. Alternatively, users can permanently delete goals they no longer want to track.
+Users can mark goals as complete using a checkbox, which moves them to the completed column. Alternatively, users can permanently delete goals they no longer want to track. Completed goals can also be uncompleted (moved back to active) or deleted from the completed column.
 
-**Why this priority**: Completing goals is satisfying and important, but requires P1 (viewing) and P2 (adding) to be useful. This completes the basic goal lifecycle.
+**Why this priority**: Completing goals is satisfying and important, but requires P1 (viewing) and P2 (adding) to be useful. This completes the basic goal lifecycle and allows flexibility in managing goals.
 
-**Independent Verification**: Can be manually verified by checking a goal's checkbox and seeing it move to the right column, or by deleting a goal and confirming it's removed from the app.
+**Independent Verification**: Can be manually verified by checking a goal's checkbox and seeing it move to the right column, uncompleting a goal to return it to active, or by deleting a goal and confirming it's removed from the app.
 
 **Acceptance Scenarios**:
 
-1. **Given** an active goal exists, **When** user checks the goal's checkbox, **Then** a confirmation or action choice appears (move to completed or delete)
-2. **Given** user chooses to complete the goal, **When** the action is confirmed, **Then** the goal moves from the left column to the right "Completed" column
-3. **Given** user chooses to delete the goal, **When** the action is confirmed, **Then** the goal is permanently removed from both columns
-4. **Given** a goal is in the completed column, **When** user views it, **Then** it displays with the same title but without the countdown timer
-5. **Given** multiple goals are completed, **When** user views the right column, **Then** all completed goals are visible in a list
+1. **Given** an active goal exists, **When** user checks the goal's checkbox, **Then** immediate action buttons (Complete / Delete) appear beside the goal
+2. **Given** action buttons are visible, **When** user clicks "Complete" button, **Then** the goal moves from the left column to the right "Completed" column
+3. **Given** user clicks "Delete" button, **When** the action is confirmed, **Then** the goal is permanently removed from both columns
+4. **Given** a goal is overdue (past end date), **When** user checks the checkbox, **Then** only the Delete button appears (Complete button is not available)
+5. **Given** a goal is in the completed column, **When** user views it, **Then** it displays with the same title but without the countdown timer
+6. **Given** a completed goal is clicked or selected, **When** user interacts with it, **Then** action buttons (Uncomplete / Delete) appear
+7. **Given** user clicks "Uncomplete" on a completed goal, **When** confirmed, **Then** the goal moves back to the active column with its original end date
+8. **Given** user clicks "Delete" on a completed goal, **When** confirmed, **Then** the goal is permanently removed
 
 ---
 
@@ -94,7 +97,7 @@ The application uses a modern light theme with fun pastel colors throughout the 
 
 ### Edge Cases
 
-- What happens when a goal's end date is in the past? (Display "Overdue" or negative days?)
+- What happens when a goal's end date is in the past? (Display "Overdue" text, show only Delete button, no Complete option)
 - What happens when user tries to set an end date in the past? (Validation should prevent this)
 - What happens when user has many goals (50+)? (Column should scroll, maintain performance)
 - What happens when goal title is very long? (Text should wrap or truncate with ellipsis)
@@ -107,8 +110,8 @@ The application uses a modern light theme with fun pastel colors throughout the 
 
 ### Functional Requirements
 
-- **FR-001**: System MUST display active goals in a left column showing goal title and days remaining until deadline
-- **FR-002**: System MUST display completed goals in a right column showing goal title without countdown
+- **FR-001**: System MUST display active goals in a left column showing goal title and days remaining until deadline, sorted by deadline (soonest first)
+- **FR-002**: System MUST display completed goals in a right column showing goal title without countdown, sorted by completion date (most recent first)
 - **FR-003**: System MUST calculate and display days remaining dynamically based on current date and goal deadline
 - **FR-004**: System MUST provide an "Add Goal" button that opens a modal form overlay
 - **FR-005**: System MUST collect goal title (text input) and end date (date picker) in the add goal form
@@ -117,7 +120,7 @@ The application uses a modern light theme with fun pastel colors throughout the 
 - **FR-008**: System MUST prevent users from selecting past dates for new goals
 - **FR-009**: System MUST add newly created goals to the active goals column immediately after submission
 - **FR-010**: System MUST provide a checkbox or similar control for each active goal
-- **FR-011**: System MUST provide options to either complete or delete a goal when checkbox is activated
+- **FR-011**: System MUST display inline action buttons (Complete / Delete) beside the goal when checkbox is activated
 - **FR-012**: System MUST move goals to the completed column when user selects "complete" action
 - **FR-013**: System MUST permanently remove goals when user selects "delete" action
 - **FR-014**: System MUST visually highlight goals that have 3 or fewer days remaining until deadline
@@ -127,6 +130,14 @@ The application uses a modern light theme with fun pastel colors throughout the 
 - **FR-018**: System MUST allow modal to be closed without saving (cancel action)
 - **FR-019**: System MUST provide clear visual feedback when goals transition between states
 - **FR-020**: System MUST handle empty states appropriately (no active goals, no completed goals)
+- **FR-021**: System MUST automatically sort active goals by deadline with soonest deadlines appearing first
+- **FR-022**: System MUST automatically sort completed goals by completion date with most recently completed appearing first
+- **FR-023**: System MUST display "Overdue" text instead of days remaining for goals past their end date
+- **FR-024**: System MUST show only Delete button (not Complete button) for overdue goals
+- **FR-025**: System MUST apply maximum urgency highlighting to overdue goals
+- **FR-026**: System MUST provide interaction controls for completed goals (clickable or with action buttons)
+- **FR-027**: System MUST allow users to uncomplete goals, moving them back to the active column with original end date
+- **FR-028**: System MUST allow users to delete goals from the completed column permanently
 
 ### Key Entities
 
@@ -135,6 +146,7 @@ The application uses a modern light theme with fun pastel colors throughout the 
   - End Date: Target deadline for completion
   - Status: Active or Completed (deleted goals don't persist)
   - Created Date: When the goal was added (implicit)
+  - Completion Date: When the goal was marked as completed (for completed goals)
   - Days Remaining: Calculated value based on end date and current date
 
 ## Success Criteria *(mandatory)*
@@ -162,7 +174,8 @@ The application uses a modern light theme with fun pastel colors throughout the 
 - Browser supports ES6+ JavaScript features and modern CSS
 - Modal overlay darkens background to focus attention on form
 - Deletion is permanent with no undo feature (could add confirmation dialog)
-- Completed goals remain indefinitely unless manually deleted from completed column
+- Completed goals can be uncompleted and moved back to active status
+- Uncompleted goals retain their original end date when moved back to active
 - Goal titles have reasonable length limit (e.g., 100-200 characters)
 
 ## Out of Scope
@@ -182,3 +195,12 @@ The application uses a modern light theme with fun pastel colors throughout the 
 - Undo/redo functionality
 - Drag-and-drop reordering
 - Goal search or filtering
+
+## Clarifications
+
+### Session 2025-12-30
+
+- Q: When a user clicks the checkbox on an active goal, what should happen? → A: Shows immediate action buttons beside the goal (Complete / Delete) without modal
+- Q: How should goals be ordered/sorted within each column (active and completed)? → A: By deadline (soonest first) in active, by completion date (most recent first) in completed
+- Q: How should overdue goals (end date in the past) be displayed and handled? → A: User can only delete (not complete) overdue goals - must manually remove them
+- Q: Can completed goals be interacted with (uncompleted or deleted from the completed column)? → A: Completed goals can be uncompleted (moved back to active) or deleted
