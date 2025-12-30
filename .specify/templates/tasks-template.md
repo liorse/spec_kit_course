@@ -8,7 +8,7 @@ description: "Task list template for feature implementation"
 **Input**: Design documents from `/specs/[###-feature-name]/`
 **Prerequisites**: plan.md (required), spec.md (required for user stories), research.md, data-model.md, contracts/
 
-**Tests**: The examples below include test tasks. Tests are OPTIONAL - only include them if explicitly requested in the feature specification.
+**Tests**: Per project constitution, automated testing is PROHIBITED. All verification must be done manually through browser testing.
 
 **Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
 
@@ -20,10 +20,10 @@ description: "Task list template for feature implementation"
 
 ## Path Conventions
 
-- **Single project**: `src/`, `tests/` at repository root
-- **Web app**: `backend/src/`, `frontend/src/`
-- **Mobile**: `api/src/`, `ios/src/` or `android/src/`
-- Paths shown below assume single project - adjust based on plan.md structure
+- **Next.js app**: `app/`, `public/` at repository root (no test directories)
+- **With backend**: `backend/src/`, `app/` for frontend
+- **Monorepo**: `apps/*/`, `packages/*/`
+- Paths shown below assume Next.js app structure - adjust based on plan.md structure
 
 <!-- 
   ============================================================================
@@ -62,12 +62,13 @@ description: "Task list template for feature implementation"
 
 Examples of foundational tasks (adjust based on your project):
 
-- [ ] T004 Setup database schema and migrations framework
-- [ ] T005 [P] Implement authentication/authorization framework
-- [ ] T006 [P] Setup API routing and middleware structure
-- [ ] T007 Create base models/entities that all stories depend on
-- [ ] T008 Configure error handling and logging infrastructure
+- [ ] T004 Setup database schema and migrations framework (if needed)
+- [ ] T005 [P] Implement authentication/authorization framework (if needed)
+- [ ] T006 [P] Setup API routing structure in app/api/
+- [ ] T007 Create base components and types that all stories depend on
+- [ ] T008 Configure error handling and user feedback mechanisms
 - [ ] T009 Setup environment configuration management
+- [ ] T010 Configure Tailwind theme and responsive breakpoints
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -77,25 +78,19 @@ Examples of foundational tasks (adjust based on your project):
 
 **Goal**: [Brief description of what this story delivers]
 
-**Independent Test**: [How to verify this story works on its own]
-
-### Tests for User Story 1 (OPTIONAL - only if tests requested) ⚠️
-
-> **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
-
-- [ ] T010 [P] [US1] Contract test for [endpoint] in tests/contract/test_[name].py
-- [ ] T011 [P] [US1] Integration test for [user journey] in tests/integration/test_[name].py
+**Manual Verification**: [How to manually verify this story works - specific browser actions and expected results]
 
 ### Implementation for User Story 1
 
-- [ ] T012 [P] [US1] Create [Entity1] model in src/models/[entity1].py
-- [ ] T013 [P] [US1] Create [Entity2] model in src/models/[entity2].py
-- [ ] T014 [US1] Implement [Service] in src/services/[service].py (depends on T012, T013)
-- [ ] T015 [US1] Implement [endpoint/feature] in src/[location]/[file].py
-- [ ] T016 [US1] Add validation and error handling
-- [ ] T017 [US1] Add logging for user story 1 operations
+- [ ] T011 [P] [US1] Create [Component1] in app/components/[component1].tsx
+- [ ] T012 [P] [US1] Create [Component2] in app/components/[component2].tsx
+- [ ] T013 [US1] Implement page route in app/[route]/page.tsx (depends on T011, T012)
+- [ ] T014 [US1] Add responsive styling with Tailwind (mobile, tablet, desktop)
+- [ ] T015 [US1] Add form validation and error handling
+- [ ] T016 [US1] Add user feedback (loading states, success/error messages)
+- [ ] T017 [US1] Manual browser verification across viewports
 
-**Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
+**Checkpoint**: At this point, User Story 1 should be fully functional and manually verifiable independently
 
 ---
 

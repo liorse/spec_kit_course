@@ -17,11 +17,10 @@
   the iteration process.
 -->
 
-**Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]  
-**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]  
-**Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]  
-**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]  
-**Target Platform**: [e.g., Linux server, iOS 15+, WASM or NEEDS CLARIFICATION]
+**Language/Version**: [e.g., TypeScript 5.x with Next.js 16.1.1 and React 19.2.3 or NEEDS CLARIFICATION]  
+**Primary Dependencies**: [e.g., Next.js, React, Tailwind CSS or NEEDS CLARIFICATION]  
+**Storage**: [if applicable, e.g., PostgreSQL, files, browser storage or N/A]  
+**Target Platform**: [e.g., Web browsers (Chrome, Firefox, Safari, Edge) or NEEDS CLARIFICATION]
 **Project Type**: [single/web/mobile - determines source structure]  
 **Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]  
 **Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]  
@@ -56,39 +55,37 @@ specs/[###-feature]/
 -->
 
 ```text
-# [REMOVE IF UNUSED] Option 1: Single project (DEFAULT)
-src/
-├── models/
-├── services/
-├── cli/
-└── lib/
+# [REMOVE IF UNUSED] Option 1: Next.js Application (DEFAULT for this project)
+app/
+├── (routes)/          # App router pages
+├── components/        # Reusable React components
+├── api/              # API routes (if needed)
+└── globals.css       # Global Tailwind styles
 
-tests/
-├── contract/
-├── integration/
-└── unit/
+public/               # Static assets
+├── images/
+└── icons/
 
-# [REMOVE IF UNUSED] Option 2: Web application (when "frontend" + "backend" detected)
+# [REMOVE IF UNUSED] Option 2: Next.js with separate API backend
 backend/
 ├── src/
 │   ├── models/
 │   ├── services/
 │   └── api/
-└── tests/
 
-frontend/
-├── src/
-│   ├── components/
-│   ├── pages/
-│   └── services/
-└── tests/
+app/
+├── (routes)/
+├── components/
+└── services/         # Frontend API clients
 
-# [REMOVE IF UNUSED] Option 3: Mobile + API (when "iOS/Android" detected)
-api/
-└── [same as backend above]
+# [REMOVE IF UNUSED] Option 3: Monorepo structure
+apps/
+├── web/             # Main Next.js app
+└── admin/           # Admin Next.js app
 
-ios/ or android/
-└── [platform-specific structure: feature modules, UI flows, platform tests]
+packages/
+├── ui/              # Shared components
+└── utils/           # Shared utilities
 ```
 
 **Structure Decision**: [Document the selected structure and reference the real
