@@ -10,12 +10,13 @@ import { useState, useEffect } from 'react';
  * @returns [value, setValue] tuple similar to useState
  */
 export function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T) => void] {
-  // State to store our value
+  // Always start with initialValue to match server render
   const [storedValue, setStoredValue] = useState<T>(initialValue);
-  const [isInitialized, setIsInitialized] = useState(false);
+  const [isHydrated, setIsHydrated] = useState(false);
 
-  // Load from localStorage on mount (client-side only)
+  // After mount, load from localStorage (client-side only)
   useEffect(() => {
+    setIsHydrated(true);
     try {
       const item = window.localStorage.getItem(key);
       if (item) {
@@ -23,21 +24,23 @@ export function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T)
       }
     } catch (error) {
       console.error(`Error loading ${key} from localStorage:`, error);
-    } finally {
-      setIsInitialized(true);
     }
   }, [key]);
 
-  // Save to localStorage whenever value changes
-  const setValue = (value: T) => {
-    try {
-      setStoredValue(value);
-      if (typeof window !== 'undefined') {
-        window.localStorage.setItem(key, JSON.stringify(value));
+  // Save to localStorage whenever value changes (only after hydration)
+  useEffect(() => {
+    if (isHydrated) {
+      try {
+        window.localStorage.setItem(key, JSON.stringify(storedValue));
+      } catch (error) {
+        console.error(`Error saving ${key} to localStorage:`, error);
       }
-    } catch (error) {
-      console.error(`Error saving ${key} to localStorage:`, error);
     }
+  }, [key, storedValue, isHydrated]);
+
+  // Update function
+  const setValue = (value: T) => {
+    setStoredValue(value);
   };
 
   return [storedValue, setValue];
