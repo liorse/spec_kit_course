@@ -39,7 +39,7 @@ export function GoalCard({ goal, onComplete, onUncomplete, onDelete }: GoalCardP
   };
 
   return (
-    <div className={`p-4 rounded-lg border shadow-sm hover:shadow-md transition-all duration-300 ${getUrgencyClasses()}`}>
+    <div className={`p-4 rounded-lg border shadow-sm hover:shadow-md transition-all duration-300 cursor-grab active:cursor-grabbing ${getUrgencyClasses()}`}>
       <div className="flex items-start gap-3">
         {/* Checkbox for selecting goal */}
         <input

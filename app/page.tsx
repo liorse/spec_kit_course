@@ -10,11 +10,23 @@ import { AddGoalButton } from './components/AddGoalButton';
 import { AddGoalModal } from './components/AddGoalModal';
 
 export default function Home() {
-  const { activeGoals, completedGoals, addGoal, completeGoal, uncompleteGoal, deleteGoal } = useGoals();
+  const { activeGoals, completedGoals, addGoal, completeGoal, uncompleteGoal, deleteGoal, reorderGoals } = useGoals();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleAddGoal = (title: string, endDate: string) => {
     addGoal(title, endDate);
+  };
+
+  const handleReorderActive = (oldIndex: number, newIndex: number) => {
+    if (activeGoals[oldIndex]) {
+      reorderGoals(activeGoals[oldIndex].id, oldIndex, newIndex, 'active');
+    }
+  };
+
+  const handleReorderCompleted = (oldIndex: number, newIndex: number) => {
+    if (completedGoals[oldIndex]) {
+      reorderGoals(completedGoals[oldIndex].id, oldIndex, newIndex, 'completed');
+    }
   };
 
   return (
@@ -29,7 +41,11 @@ export default function Home() {
         {/* Two-column layout: Active Goals | Completed Goals */}
         <div className="flex flex-col md:flex-row gap-6 md:gap-8">
           {/* Active Goals Column */}
-          <GoalColumn title="Active Goals">
+          <GoalColumn 
+            title="Active Goals"
+            status="active"
+            onReorder={handleReorderActive}
+          >
             {activeGoals.length === 0 ? (
               <EmptyState message="No active goals yet. Click the + button to add your first goal!" />
             ) : (
@@ -45,7 +61,11 @@ export default function Home() {
           </GoalColumn>
 
           {/* Completed Goals Column */}
-          <GoalColumn title="Completed Goals">
+          <GoalColumn 
+            title="Completed Goals"
+            status="completed"
+            onReorder={handleReorderCompleted}
+          >
             {completedGoals.length === 0 ? (
               <EmptyState message="No completed goals yet." />
             ) : (

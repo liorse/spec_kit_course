@@ -24,9 +24,9 @@
 
 **Purpose**: Install dependencies and prepare project structure
 
-- [ ] T001 Install sortablejs@1.15.3 and react-sortablejs@6.1.4 dependencies via npm
-- [ ] T002 [P] Add order property to Goal interface in app/lib/types.ts
-- [ ] T003 [P] Verify existing localStorage mechanism works with new order property
+- [X] T001 Install sortablejs@1.15.3 and react-sortablejs@6.1.4 dependencies via npm
+- [X] T002 [P] Add order property to Goal interface in app/lib/types.ts
+- [X] T003 [P] Verify existing localStorage mechanism works with new order property
 
 **Checkpoint**: Dependencies installed, Goal type updated, ready for implementation
 
@@ -38,11 +38,11 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T004 Implement migration logic in app/hooks/useGoals.tsx to add order property to existing goals
-- [ ] T005 Update activeGoals sort logic in app/hooks/useGoals.tsx to sort by order property (ascending)
-- [ ] T006 Update completedGoals sort logic in app/hooks/useGoals.tsx to sort by order property (ascending)
-- [ ] T007 Add reorderGoals function in app/hooks/useGoals.tsx to handle goal reordering within status groups
-- [ ] T008 Update addGoal function in app/hooks/useGoals.tsx to assign order = max(existing orders) + 1
+- [X] T004 Implement migration logic in app/hooks/useGoals.tsx to add order property to existing goals
+- [X] T005 Update activeGoals sort logic in app/hooks/useGoals.tsx to sort by order property (ascending)
+- [X] T006 Update completedGoals sort logic in app/hooks/useGoals.tsx to sort by order property (ascending)
+- [X] T007 Add reorderGoals function in app/hooks/useGoals.tsx to handle goal reordering within status groups
+- [X] T008 Update addGoal function in app/hooks/useGoals.tsx to assign order = max(existing orders) + 1
 - [ ] T009 Manual verification: Confirm existing goals get migrated with order values on first load
 
 **Checkpoint**: Foundation ready - data model supports ordering, migration works, user story implementation can now begin in parallel
@@ -63,13 +63,13 @@
 
 ### Implementation for User Story 1
 
-- [ ] T010 [P] [US1] Update GoalColumn component in app/components/GoalColumn.tsx to accept status and onReorder props
-- [ ] T011 [P] [US1] Wrap GoalColumn children with ReactSortable component from react-sortablejs in app/components/GoalColumn.tsx
-- [ ] T012 [US1] Configure ReactSortable with animation=150, delay=500 for touch, delayOnTouchOnly=true in app/components/GoalColumn.tsx
-- [ ] T013 [US1] Implement onEnd callback in GoalColumn to call onReorder with old and new indices in app/components/GoalColumn.tsx
-- [ ] T014 [US1] Update page.tsx to pass reorderGoals handler to ActiveGoals GoalColumn with status='active'
-- [ ] T015 [US1] Update page.tsx to pass reorderGoals handler to CompletedGoals GoalColumn with status='completed'
-- [ ] T016 [US1] Add cursor: grab/grabbing affordance styling to GoalCard component in app/components/GoalCard.tsx
+- [X] T010 [P] [US1] Update GoalColumn component in app/components/GoalColumn.tsx to accept status and onReorder props
+- [X] T011 [P] [US1] Wrap GoalColumn children with ReactSortable component from react-sortablejs in app/components/GoalColumn.tsx
+- [X] T012 [US1] Configure ReactSortable with animation=150, delay=500 for touch, delayOnTouchOnly=true in app/components/GoalColumn.tsx
+- [X] T013 [US1] Implement onEnd callback in GoalColumn to call onReorder with old and new indices in app/components/GoalColumn.tsx
+- [X] T014 [US1] Update page.tsx to pass reorderGoals handler to ActiveGoals GoalColumn with status='active'
+- [X] T015 [US1] Update page.tsx to pass reorderGoals handler to CompletedGoals GoalColumn with status='completed'
+- [X] T016 [US1] Add cursor: grab/grabbing affordance styling to GoalCard component in app/components/GoalCard.tsx
 - [ ] T017 [US1] Manual browser verification: Drag goals with mouse on desktop (Chrome, Firefox, Safari, Edge)
 - [ ] T018 [US1] Manual browser verification: Long-press and drag goals on mobile/tablet devices
 - [ ] T019 [US1] Manual browser verification: Confirm order persists after page refresh

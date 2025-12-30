@@ -15,6 +15,7 @@ export interface Goal {
   status: GoalStatus;      // Current state of goal
   createdAt: string;       // ISO 8601 timestamp
   completedAt?: string;    // ISO 8601 timestamp (only for completed goals)
+  order: number;           // Position in list (0-based, lower = higher priority)
 }
 
 /**
