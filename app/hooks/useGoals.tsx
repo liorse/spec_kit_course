@@ -75,8 +75,17 @@ export function useGoals(): UseGoalsReturn {
       ? Math.max(...activeGoals.map(g => g.order ?? 0))
       : -1;
     
+    // Generate ID safely (crypto.randomUUID requires secure context)
+    const generateId = () => {
+      if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+        return crypto.randomUUID();
+      }
+      // Fallback for insecure contexts (like mobile testing on IP)
+      return Date.now().toString(36) + Math.random().toString(36).substring(2);
+    };
+
     const newGoal: Goal = {
-      id: crypto.randomUUID(),
+      id: generateId(),
       title: title.trim(),
       endDate,
       status: 'active',
