@@ -30,8 +30,13 @@ export function GoalColumn({ title, children, status, onReorder }: GoalColumnPro
   }));
 
   return (
-    <div className="flex-1 min-w-0">
-      <h2 className="text-2xl font-bold mb-4 text-foreground">{title}</h2>
+    <div className="flex-1 min-w-0 bg-muted/30 p-4 rounded-xl border border-border/50">
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-lg font-semibold text-foreground tracking-tight">{title}</h2>
+        <span className="text-xs font-medium text-muted-foreground bg-muted px-2 py-1 rounded-full">
+          {childrenArray.length}
+        </span>
+      </div>
       
       <ReactSortable
         list={sortableList}

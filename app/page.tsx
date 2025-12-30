@@ -30,16 +30,21 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-background p-4 md:p-8">
-      <div className="max-w-7xl mx-auto">
+    <main className="min-h-screen bg-background p-4 md:p-8 transition-colors duration-300">
+      <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <header className="mb-8">
-          <h1 className="text-4xl font-bold text-foreground">DoIt</h1>
-          <p className="text-muted-foreground mt-2">Track your goals and deadlines</p>
+        <header className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-border/40 pb-6">
+          <div>
+            <h1 className="text-4xl font-extrabold tracking-tight text-foreground">DoIt</h1>
+            <p className="text-muted-foreground mt-2 text-lg">Focus on what matters.</p>
+          </div>
+          <div className="text-sm text-muted-foreground font-medium bg-muted/50 px-3 py-1 rounded-full">
+            {activeGoals.length} active • {completedGoals.length} completed
+          </div>
         </header>
 
         {/* Two-column layout: Active Goals | Completed Goals */}
-        <div className="flex flex-col md:flex-row gap-6 md:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
           {/* Active Goals Column */}
           <GoalColumn 
             title="Active Goals"
