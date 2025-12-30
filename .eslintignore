@@ -1,0 +1,22 @@
+# dependencies
+node_modules/
+
+# build outputs
+.next/
+out/
+dist/
+build/
+
+# coverage
+coverage/
+
+# configuration
+next.config.ts
+postcss.config.mjs
+tailwind.config.ts
+
+# environment
+.env*
+
+# misc
+*.log
